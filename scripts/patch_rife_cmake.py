@@ -8,6 +8,19 @@ if len(sys.argv) != 2:
 cmake = Path(sys.argv[1]) / "CMakeLists.txt"
 text = cmake.read_text(encoding="utf-8")
 
+# RIFE's top-level CMake adds -fopenmp globally when OpenMP is detected.
+# The Android NDK toolchain selected OpenMP compile flags but did not link
+# an OpenMP runtime into the JNI shared library. NCNN is already configured
+# with NCNN_OPENMP=OFF by the app CMake project, so disable this global probe.
+openmp_probe = "find_package(OpenMP)"
+if openmp_probe not in text:
+    raise SystemExit("Could not find the expected OpenMP probe; refusing unsafe patch")
+text = text.replace(
+    openmp_probe,
+    "set(OPENMP_FOUND FALSE)\\nset(OpenMP_FOUND FALSE)\\nset(OpenMP_CXX_FOUND FALSE)"
+)
+
+
 old_target = """add_executable(rife-ncnn-vulkan
     main.cpp
     rife.cpp
