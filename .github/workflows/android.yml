@@ -30,8 +30,6 @@ jobs:
         uses: android-actions/setup-android@v4
         with:
           packages: 'platform-tools'
-        with:
-          packages: 'platform-tools'
 
       - name: Install Android packages
         run: |
