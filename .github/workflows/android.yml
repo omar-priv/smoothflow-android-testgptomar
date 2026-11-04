@@ -8,10 +8,6 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: smoothflow-android-build
-  cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-24.04
