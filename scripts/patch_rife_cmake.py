@@ -17,7 +17,7 @@ if openmp_probe not in text:
     raise SystemExit("Could not find the expected OpenMP probe; refusing unsafe patch")
 text = text.replace(
     openmp_probe,
-    "set(OPENMP_FOUND FALSE)\\nset(OpenMP_FOUND FALSE)\\nset(OpenMP_CXX_FOUND FALSE)"
+    "set(OPENMP_FOUND FALSE)"
 )
 
 
